@@ -1,0 +1,37 @@
+<html>
+<head><title>Displaying data</title>
+</head>
+<body>
+File Contents : 
+<ul>
+    <%dataToSend.forEach(function(data) { %>
+        <li><%= data %></li>
+    <% }); %>
+</ul>
+<br>
+Add text: <br>
+<form action="/write" method="POST">
+      <input type="text" name="appendText" placeholder="Enter the text to add">
+      <br>
+      <input type="submit" value="Click to add">
+    </form>
+<br>
+Update text: <br>
+<form action="/update" method="POST">
+      <input type="text" name="modifyText" placeholder="Enter text">
+      <input type="text" name="lineToModify" placeholder="Enter the line number to modify">
+      <br>
+      <input type="submit" value="Click to update">
+    </form>
+<br>
+Delete text: <br>
+<form action="/destroy" method="POST">
+      <input type="text" name="lineToDelete" placeholder="Enter the line number to delete">
+      <br>
+      <input type="submit" value="Click to delete">
+    </form>
+
+
+
+</body>
+</html>
