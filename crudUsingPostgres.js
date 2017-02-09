@@ -4,7 +4,7 @@ var sequelize = new Sequelize('postgres://vibhugulati:BL@CKB!RD1195@localhost:54
 
 let operations = {
   insert: function (description, status = false) {
-    let insertQuery = `INSERT INTO tasks (description,status) VALUES('${description}',${status})`
+    let insertQuery = `INSERT INTO tasks (description,status) VALUES('${description}',${status}) returning id`
     return sequelize.query(insertQuery)
   },
   read: function () {

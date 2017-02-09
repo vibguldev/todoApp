@@ -1,72 +1,42 @@
-// function whichButton(buttonElement) {
-//   // alert(buttonElement.id);
-//   var buttonClickedId = buttonElement.id;
-//   if (buttonClickedId === 'btn1') {
-//     var todo = document.getElementById("enterToDo").value
-//     fetch(`/write/${todo}`, {
-//       method: "POST"
-//       // body: {task:todo}
-//       // console.log(todo)
-//     }).then((response) => {
-//       console.log(response)
-//     })
-//       .catch((response) => {
-//         console.log(response)
-//       });
-// 
-//   }
-//   else if (buttonClickedId === 'btn2') {
-//     var deletetodo = document.getElementById("deleteLine").value
-//     fetch(`/destroy/${deletetodo}`, {
-//       method: "DELETE"
-//       // body: {task:todo}
-//       // console.log(todo)
-//     }).then((response) => {
-//       console.log(response)
-//     })
-//       .catch((response) => {
-//         console.log(response)
-//       });
-//   }
-//   // ...
-//   else if (buttonClickedId === 'btn3') {
-//     var updateToDoLine = document.getElementById("updateLine").value
-//     var updateToDoText = document.getElementById("updateText").value
-//     var updateToDoStatus = document.getElementById("updateStatus").value
-//     let data = {
-//       description: updateToDoText,
-//       status: updateToDoStatus
-//     }
-//     fetch(`/update/${updateToDoLine}`, {
-//       method: "PUT",
-//       // body: {task:todo}
-//       // console.log(todo)
-//       body: JSON.stringify(data),
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     }).then((response) => {
-//       console.log(response)
-//     })
-//       .catch((response) => {
-//         console.log(response)
-//       });
-//   }
+function htmlStringify (obj) {
+  // if (obj.status === true) {
+    let checked = obj.status === true ? 'checked' : null
+    var string = 
+    `<li>
+    <input type="checkbox" onclick="edit(this)" ${checked} id=status${obj.id}>
+    <label class="${checked ? 'striked' : ''}">"${obj.description} "</label>
+    <input class="todo-text-${checked ? 'striked' : ''}"  type="text" value=${obj.description} id=text${obj.id}>
+    <button class="edit" onclick="edit(this)" id=${obj.id}>Edit</button>
+    <button class="delete" onclick="destroy(this)" id=${obj.id}>Delete</button>
+    </li>`
+    return string
+  }
 
-// }
-function add(buttonElement) {
+
+document.getElementById("enterToDo").onkeydown = function (event) {
+  if (event.keyCode === 13) {
   var todo = document.getElementById("enterToDo").value
   fetch(`/write/${todo}`, {
     method: "POST"
-    // body: {task:todo}
-    // console.log(todo)
   }).then((response) => {
+    response.json()
+    .then((json) => {
+      console.log(json.id)
+      console.log(todos[0].description)
+      console.log(todos[0].id)
+      console.log(todos[0].status)      
+    })
+    .catch((response) => {
+      console.log(response)
+    })
     console.log(response)
+    read()
   })
     .catch((response) => {
       console.log(response)
     });
 
+}
 }
 function edit(element) {
   if (element.id.slice(0,6) === 'status') {
@@ -90,6 +60,7 @@ function edit(element) {
     }
   }).then((response) => {
     console.log(response)
+    read()
   })
     .catch((response) => {
       console.log(response)
@@ -102,46 +73,38 @@ function destroy(buttonElement) {
     method: "DELETE"
   }).then((response) => {
     console.log(response)
+    read()
   })
     .catch((response) => {
       console.log(response)
     })
 }
 
-// function statusChange(checkboxElement) {
-
-// }
-
-
-fetch('/read', {
+var todos=[]
+const read = () => {fetch('/read', {
   method: 'get'
 }).then(function (response) {
   response.json()
     .then((json) => {
-      // console.log("running the render inside script.js")
-      row = "";
+      
+      var row = "";
       // row1 = "";
       let count = 0
       json.forEach((obj) => {
-        count = count + 1
-        // console.log(obj.status)
-        // console.log(typeof obj.status)
+        todos[count] = {id : obj.id,
+                              status : obj.status,
+                              description : obj.description}
         
-        if (obj.status === true) {
-        row = row + `<li><input type="checkbox" onclick="edit(this)" checked="true" id=status${obj.id}><label>"${obj.description} "</label><input type="text" id=text${obj.id}><button class="edit" onclick="edit(this)" id=${obj.id}>Edit</button><button class="delete" onclick="destroy(this)" id=${obj.id}>Delete</button></li>`
-        }
-        else if (obj.status === false) {
-          row = row + `<li><input type="checkbox" onclick="edit(this)" id=status${obj.id}><label>"${obj.description} "</label><input type="text" id=text${obj.id}><button class="edit" onclick="edit(this)" id=${obj.id}>Edit</button><button class="delete" onclick="destroy(this)" id=${obj.id}>Delete</button></li>`
-        }
-        // row = row + "<li>" + "&nbsp" + obj.description + "&nbsp" + obj.status + "</li>"
-        // row1 = row1 + `<option value=${count}>${count}</option>`
+        
+          var domString = htmlStringify(todos[count])
+          row = row + domString
+          count = count + 1
       })
       document.getElementById("this").innerHTML = row;
-      // document.getElementById("updateLine").innerHTML = row1;
-      // document.getElementById("deleteLine").innerHTML = row1;
-
 
     })
 
 }).catch(function (err) {
-});
+})
+}
+read()

@@ -26,12 +26,14 @@ app.get('/read', function (req, res) {
 })
 
 app.post('/write/:description', function (req, res) {
-  console.log(array)
+  // console.log(array)
   let description = req.params['description']
   // console.log(description)
   operations.insert(description)
     .then((response) => {
       // console.log(response)
+      console.log(response)
+      res.send(response[0])
       // res.redirect('/read')
     })
     .catch((response) => {
@@ -45,7 +47,8 @@ app.delete('/destroy/:id', function (req, res) {
   // resolve(id)
   operations.destroy(idOfDB)
     .then((response) => {
-      console.log(response[0])
+      // console.log(response[0])
+      res.send(response)
       // res.redirect('/read')
     })
     .catch((response) => {
@@ -63,9 +66,10 @@ app.put('/update/:id', function (req, res) {
   // console.log(status)
   operations.update(idOfDB, description, status)
     .then((response) => {
+      res.send(response[0])
       // console.log("correct")
       // console.log(response)
-      res.redirect('/read')
+      // res.redirect('/read')
     })
     .catch((response) => {
       // console.log("!!!!!!!!!!error!!!!!!!!!!!!!>>>>>>>>>>>>>>>>>")
