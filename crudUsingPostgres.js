@@ -8,7 +8,7 @@ let operations = {
     return sequelize.query(insertQuery)
   },
   read: function () {
-    let readQuery = `SELECT id, description, status FROM tasks ORDER BY id DESC`
+    let readQuery = `SELECT id, description, status FROM tasks ORDER BY id`
     return sequelize.query(readQuery)
   },
   destroy: function (id) {
