@@ -41,6 +41,16 @@ app.post('/write/:description', function (req, res) {
     })
 })
 
+app.delete('/destroyAllChecked', function (req, res) {
+  operations.destroyAllChecked()
+  .then((response) => {
+    res.send(response)
+  })
+  .catch((response) => {
+    res.sendStatus(500)
+  })
+})
+
 app.delete('/destroy/:id', function (req, res) {
   // let idByUser = (req.params['id'] - 1).toString()
   let idOfDB = req.params['id']
@@ -55,6 +65,28 @@ app.delete('/destroy/:id', function (req, res) {
       console.log(response)
     })
 })
+
+app.put('/unCheckAll', function (req, res) {
+  operations.unCheckAll()
+  .then((response) => {
+    res.send("updated all to false succesfully")
+  })
+  .catch((response) => {
+    res.sendStatus(500)
+  })
+})
+
+app.put('/checkAll', function (req, res) {
+  operations.checkAll()
+  .then((response) => {
+    res.send("updated all to true succesfully")
+  })
+  .catch((response) => {
+    res.sendStatus(500)
+  })
+})
+
+
 
 app.put('/update/:id', function (req, res) {
   // let idByUser = (req.params['id'] - 1).toString()

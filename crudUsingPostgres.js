@@ -11,6 +11,18 @@ let operations = {
     let readQuery = `SELECT id, description, status FROM tasks ORDER BY id`
     return sequelize.query(readQuery)
   },
+  checkAll: function () {
+    let checkAllQuery = `UPDATE tasks SET status = true`
+    return sequelize.query(checkAllQuery)
+  },
+  unCheckAll: function () {
+    let unCheckAllQuery = `UPDATE tasks SET status = false`
+    return sequelize.query(unCheckAllQuery)
+  },
+  destroyAllChecked: function (i) {
+      let deleteQuery = `DELETE FROM tasks WHERE status = true`
+      return sequelize.query(deleteQuery)
+    },
   destroy: function (id) {
     let deleteQuery = `DELETE FROM tasks WHERE id = '${id}'`
     return sequelize.query(deleteQuery)
