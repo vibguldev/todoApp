@@ -12,6 +12,11 @@ app.get('/', function (req, res) {
   res.render('./public/index.html')
 })
 // app.set('view engine', 'ejs')
+
+app.get('/test', function(req, res) {
+  res.render('public/test')
+})
+
 app.get('/read', function (req, res) {
   operations.read()
     .then((response) => {

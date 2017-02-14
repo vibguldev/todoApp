@@ -1,20 +1,17 @@
 let filterModeFlag
-function htmlStringify(obj) {
-  if (obj) {
-    let checked = obj.status === true ? 'checked' : null
-    var string =
-      `<li>
-      <input class="toggle" type="checkbox" onclick="edit(this)" ${checked} id=status${obj.id}>
-      <input class="todo-text ${checked ? 'striked' : ''}"  type="text" value="${obj.description}" id=text${obj.id} readonly="true" ondblclick="enableText(this)" onfocusout="edit(this)" autocomplete="off">
-      <button class="delete" onclick="destroy(this)" id=${obj.id}>X</button>
-      </li>`
-    checkFooterVisibility()
-    return string
-  }
-  else {
-    checkFooterVisibility()
-  }
-}
+
+document.getElementById('loading').onload = read()
+document.getElementById('check-all').addEventListener('click', checkAll)
+document.getElementById('all').addEventListener('click', () => {
+  filterTodos('all')
+})
+document.getElementById('active').addEventListener('click', () => {
+  filterTodos('active')
+})
+document.getElementById('completed').addEventListener('click', () => {
+  filterTodos('completed')
+})
+document.getElementById('clear-completed').addEventListener('click', destroyAllChecked)
 
 function checkFooterVisibility () {
   document.getElementById('filter-footer').style.display = (todos.length > 0) ? 'block' : 'none'
@@ -41,9 +38,7 @@ function checkFilterModeFlag () {
 
 function checkAll () {
   if (todos.every((todo) => (todo.status === true))) {
-    fetch(`/unCheckAll`, {
-      method: 'PUT'
-    }).then((response) => {
+    toggleAllFetch(`/unCheckAll`).then((response) => {
       console.log(response)
       document.getElementById('this').innerHTML = null
       todos.forEach((todo) => {
@@ -53,9 +48,7 @@ function checkAll () {
       document.getElementById('number-of-todos').innerHTML = todos.filter((todo) => (todo.status === false)).length
     })
   } else {
-    fetch(`/checkAll`, {
-      method: 'PUT'
-    }).then((response) => {
+    toggleAllFetch(`/checkAll`).then((response) => {
       console.log(response)
       document.getElementById('this').innerHTML = null
       todos.forEach((todo) => {
@@ -73,9 +66,7 @@ function checkAll () {
 document.getElementById('enterToDo').onkeydown = function (event) {
   if (event.keyCode === 13) {
     var todo = document.getElementById('enterToDo').value
-    fetch(`/write/${todo}`, {
-      method: 'POST'
-    }).then((response) => {
+    writeFetch(todo).then((response) => {
       response.json()
         .then((json) => {
           console.log(json.id)
@@ -113,14 +104,7 @@ function edit (element) {
     data = {description: updateToDoText}
     descriptionFlag = true
   }
-  fetch(`/update/${todoId}`, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
-    console.log(response)
+  updateFetch(data, todoId).then((response) => {
     let index = todos.findIndex(x => x.id === todoId)
     if (descriptionFlag) {
       todos[index].description = updateToDoText
@@ -129,9 +113,6 @@ function edit (element) {
       todos[index].status = todoStatus
     }
     document.getElementById('this').innerHTML = null
-    // todos.forEach((todo) => {
-    //   document.getElementById("this").innerHTML += htmlStringify(todo)
-    // })
     checkFilterModeFlag()
     document.getElementById('number-of-todos').innerHTML = todos.filter((todo) => (todo.status === false)).length
   })
@@ -177,10 +158,7 @@ function filterTodos (filterMode) {
 }
 
 function destroyAllChecked() {
-  fetch(`/destroyAllChecked`, {
-    method: "DELETE"
-  }).then((response) => {
-    console.log("response:.........", response)
+  destroyAllFetch().then((response) => {
     document.getElementById("this").innerHTML = null
     var newTodos = []  //a dummy array created to avoid the issue of splice
     todos.forEach((todo, index) => {
@@ -193,7 +171,6 @@ function destroyAllChecked() {
       checkFilterModeFlag()
       document.getElementById("number-of-todos").innerHTML = todos.filter((todo) => (todo.status === false)).length
     })
-    
     .catch((response) => {
       console.log(response)
     })
@@ -201,11 +178,7 @@ function destroyAllChecked() {
 
 function destroy(buttonElement) {
   var buttonClickedId = buttonElement.id
-  fetch(`/destroy/${buttonClickedId}`, {
-    method: "DELETE"
-  }).then((response) => {
-    console.log(response)
-    // read()
+  destroyFetch(buttonClickedId).then((response) => {
     let index = todos.findIndex(x => x.id === buttonClickedId)
     todos.splice(index, 1)
     document.getElementById("this").innerHTML = null
@@ -221,16 +194,13 @@ function destroy(buttonElement) {
 }
 
 var todos = []
-const read = () => {
-  fetch('/read', {
-    method: 'get'
-  }).then(function (response) {
+function read() {
+  readFetch().then(function (response) {
     filterModeFlag = 0
     response.json()
       .then((json) => {
 
-        var row = "";
-        // row1 = "";
+        var row = ""
         let count = 0
         json.forEach((obj) => {
           todos[count] = {
@@ -255,4 +225,3 @@ const read = () => {
     console.log("outer catch")
   })
 }
-read()

@@ -1,5 +1,7 @@
 var Sequelize = require('sequelize')
-var sequelize = new Sequelize('postgres://vibhugulati:BL@CKB!RD1195@localhost:5432/vibhugulati')
+var dbName = process.env.DEV_MODE === 'test' ? 'testdb' : 'vibhugulati'
+var sequelize = new Sequelize
+('postgres://vibhugulati:BL@CKB!RD1195@localhost:5432/' + dbName)
 
 
 let operations = {

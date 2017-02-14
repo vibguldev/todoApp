@@ -1,83 +1,34 @@
 <html>
-
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-
-<body class="learn-bar">
+<body class="learn-bar" id="loading">
   <section class="cover">
-  <section class="todoapp">
-    <header class="header">
-      <h1>todos</h1>
-      <button id="check-all" onclick="checkAll()"><img src="arrow.png" width="20" height="18" style="opacity:0.15;"></button>
-  <input autocomplete="off" class="new-todo" id="enterToDo" placeholder="What needs to be done?" autofocus>
-    </header>
+    <section class="todoapp">
+      <header class="header">
+        <h1>todos</h1>
+        <button id="check-all"><img src="arrow.png" width="20" height="18" style="opacity:0.15;"></button>
+        <input autocomplete="off" class="new-todo" id="enterToDo" placeholder="What needs to be done?" autofocus>
+      </header>
     <section class="main" style="display: block">
-       <ul id="this">
-  </ul>
+      <ul id="this">
+      </ul>
     </section>
-  <footer class="footer-bar" id="filter-footer" style="display: block;">
-    <span class="todo-count">
-      <strong id="number-of-todos"></strong> item left</span>
-    <a href="#/" class="filters" id="all" onclick="filterTodos('all')" class="filters">All</a>
-         <a href="#/active" id="active" onclick="filterTodos('active')" class="filters">Active</a>
-        <a href="#/completed" id="completed" onclick="filterTodos('completed')" class="filters">Completed</a>
-    <!--<button id="all" onclick="filterTodos('all')">All</button>
-    <button id="active" onclick="filterTodos('active')">Active</button>
-    <button id="completed" onclick="filterTodos('completed')">Completed</button>-->
-    <button id="clear-completed" onclick="destroyAllChecked()">Clear Completed</button>
-  </footer>
+      <footer class="footer-bar" id="filter-footer" style="display: block;">
+        <span class="todo-count"><strong id="number-of-todos"></strong> item left</span>
+        <a href="#/" class="filters" id="all" class="filters">All</a>
+        <a href="#/active" id="active" class="filters">Active</a>
+        <a href="#/completed" id="completed" class="filters">Completed</a>
+        <button id="clear-completed" onclick="destroyAllChecked()">Clear Completed</button>
+      </footer>
     </section>
   </section>
   <footer class="info">
     <p>Double Click to enter a todo</p>
     <p>Created by Vibhav Gulati</p>
   </footer>
-    <!--<button id="btn1" style="display:none" onclick="add(this)">Click To Add</button><br/>-->
-
- 
-
-
-<!--<input type="text" id="id" name="deleteToDo" placeholder="enter TODO ID to delete">-->
-<!--<select id="deleteLine"></select>
-<button id="btn2" onclick="whichButton(this)">Click To Delete</button><br/>-->
-<!--<input type="text" id="updateLine" name="updateToDoNumber" placeholder="enter TODO number">-->
-<!--<select id="updateLine"></select>
-<input type="text" id="updateText" name="updateToDoText" placeholder="enter text for TODO">
-<input type="text" id="updateStatus" name="updateToDoStatus" placeholder="enter status for new TODO">
-  <button id="btn3" onclick="whichButton(this)">Click To Update</button><br/>-->
-
-
+<script src="apiFetch.js"></script>
+<script src="renderDOM.js"></script>
 <script src="script.js"></script>
-
-
 </body>
-
 </html>
-
-<!--
-<html>
-  <head><link rel="stylesheet" type="text/css" href="styles.css"></head>
-<body>
-    <div class="container">
-      <p>
-        <label for="new-task">Add Item</label><input id="new-task" type="text"><button>Add</button>
-      </p>
-      
-      <h3>Todo</h3>
-      <ul id="incomplete-tasks">
-        
-        <li class="editMode"><input type="checkbox"><label>Go Shopping</label><input type="text" value="Go Shopping"><button class="edit">Edit</button><button class="delete">Delete</button></li>
-        
-      </ul>
-      
-      <h3>Completed</h3>
-      <ul id="completed-tasks">
-        <li><input type="checkbox" checked><label>See the Doctor</label><input type="text"><button class="edit">Edit</button><button class="delete">Delete</button></li>
-      </ul>
-    </div>
-
-    <script type="text/javascript" src="script.js"></script>
-
-  </body>
-  </html>-->
