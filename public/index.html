@@ -10,13 +10,13 @@
     <header class="header">
       <h1>todos</h1>
       <button id="check-all" onclick="checkAll()"><img src="arrow.png" width="20" height="18" style="opacity:0.15;"></button>
-  <input class="new-todo" id="enterToDo" placeholder="What needs to be done?" autofocus>
+  <input autocomplete="off" class="new-todo" id="enterToDo" placeholder="What needs to be done?" autofocus>
     </header>
     <section class="main" style="display: block">
        <ul id="this">
   </ul>
     </section>
-  <footer class="footer-bar" id="abc" style="display: block;">
+  <footer class="footer-bar" id="filter-footer" style="display: block;">
     <span class="todo-count">
       <strong id="number-of-todos"></strong> item left</span>
     <a href="#/" class="filters" id="all" onclick="filterTodos('all')" class="filters">All</a>
