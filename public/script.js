@@ -1,15 +1,20 @@
 let filterModeFlag
 function htmlStringify(obj) {
   // if (obj.status === true) {
+    if (obj) {
   let checked = obj.status === true ? 'checked' : null
   var string =
     `<li>
-    <input type="checkbox" onclick="edit(this)" ${checked} id=status${obj.id}>
-    <input class="todo-text-${checked ? 'striked' : ''}"  type="text" value="${obj.description}" id=text${obj.id} readonly="true" ondblclick="enableText(this)" onfocusout="edit(this)">
-    
-    <button class="delete" onclick="destroy(this)" id=${obj.id}>❌</button>
+    <input class="toggle" type="checkbox" onclick="edit(this)" ${checked} id=status${obj.id}>
+    <input class="todo-text-${checked ? 'striked' : ''}"  type="text" value="${obj.description}" id=text${obj.id} readonly="true" ondblclick="enableText(this)" onfocusout="edit(this)" autocomplete="off">
+    <button class="delete" onclick="destroy(this)" id=${obj.id}>X</button>
     </li>`
+    document.getElementById("abc").style.display = (todos.length > 0) ? 'block' : 'none'
   return string
+    }
+    else {
+      document.getElementById("abc").style.display = (todos.length > 0) ? 'block' : 'none'
+    }
 }
 
 function enableText(obj) {
@@ -17,6 +22,7 @@ function enableText(obj) {
 }
 
 function checkFilterModeFlag() {
+  // document.getElementsByClassName("footer").style.visibility = todos.length > 0 ? 'visible' : 'hidden'
   console.log("flag : ",filterModeFlag)
   if (filterModeFlag === 0) {
     filterTodos('all')
@@ -30,7 +36,9 @@ function checkFilterModeFlag() {
 }
 
 
+
 function checkAll() {
+  
   if (todos.every((todo) => (todo.status === true))) {
     fetch(`/unCheckAll`, {
       method: "PUT"
@@ -39,9 +47,10 @@ function checkAll() {
       document.getElementById("this").innerHTML = null
       todos.forEach((todo) => {
         todo.status = false
-        document.getElementById("this").innerHTML += htmlStringify(todo)
+        // document.getElementById("this").innerHTML += htmlStringify(todo)
 
       })
+       checkFilterModeFlag()
       document.getElementById("number-of-todos").innerHTML = todos.filter((todo) => (todo.status === false)).length
 
     })
@@ -54,8 +63,9 @@ function checkAll() {
       document.getElementById("this").innerHTML = null
       todos.forEach((todo) => {
         todo.status = true
-        document.getElementById("this").innerHTML += htmlStringify(todo)
+        // document.getElementById("this").innerHTML += htmlStringify(todo)
       })
+      checkFilterModeFlag()
       document.getElementById("number-of-todos").innerHTML = todos.filter((todo) => (todo.status === false)).length
 
     })
@@ -154,6 +164,7 @@ function edit(element) {
 }
 
 function filterTodos(filterMode) {
+  document.getElementById(filterMode).className = "selected-filters"
   document.getElementById("this").innerHTML = null
   switch (filterMode) {
     case 'all': {
@@ -208,6 +219,7 @@ function destroyAllChecked() {
       // todos.forEach ((todo) => {
       //   document.getElementById("this").innerHTML += htmlStringify(todo)
       // })
+      document.getElementById("abc").style.display = (todos.length > 0) ? 'block' : 'none'
       checkFilterModeFlag()
       document.getElementById("number-of-todos").innerHTML = todos.filter((todo) => (todo.status === false)).length
     })
@@ -227,6 +239,7 @@ function destroy(buttonElement) {
     let index = todos.findIndex(x => x.id === buttonClickedId)
     todos.splice(index, 1)
     document.getElementById("this").innerHTML = null
+    document.getElementById("abc").style.display = (todos.length > 0) ? 'block' : 'none'
     todos.forEach((todo) => {
       document.getElementById("this").innerHTML += htmlStringify(todo)
     })
@@ -244,7 +257,7 @@ const read = () => {
   fetch('/read', {
     method: 'get'
   }).then(function (response) {
-    filterModeFlag = 1
+    filterModeFlag = 0
     response.json()
       .then((json) => {
 
@@ -257,6 +270,7 @@ const read = () => {
             status: obj.status,
             description: obj.description
           }
+          console.log("here")
           var domString = htmlStringify(todos[count])
           row = row + domString
           count = count + 1
@@ -266,8 +280,15 @@ const read = () => {
 
 
       })
+  .then((response) => {
+    console.log("inner catch")
+    console.log(todos.length)
+    htmlStringify()
 
-  }).catch(function (err) {
+  })
+
+  }).catch((err) => {
+    console.log("outer catch")
   })
 }
 read()
