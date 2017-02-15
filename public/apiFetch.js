@@ -5,9 +5,14 @@ function readFetch () {
 }
 
 function writeFetch (todo) {
+  if (todo) {
   return fetch(`/write/${todo}`, {
       method: 'POST'
     })
+  }
+  else {
+    return 'no description passed'
+  }
 }
 
 function destroyFetch (buttonClickedId) {
@@ -17,6 +22,7 @@ function destroyFetch (buttonClickedId) {
 }
 
 function updateFetch (data, todoId) {
+  if ((data.description !== undefined) || (data.status !== undefined)) {
   return fetch(`/update/${todoId}`, {
     method: 'PUT',
     body: JSON.stringify(data),
@@ -24,6 +30,10 @@ function updateFetch (data, todoId) {
       'Content-Type': 'application/json'
     }
   })
+  }
+  else {
+    return "neither description nor status was passed"
+  }
 }
 
 function toggleAllFetch (operation) {

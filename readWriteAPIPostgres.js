@@ -63,11 +63,19 @@ app.delete('/destroy/:id', function (req, res) {
   operations.destroy(idOfDB)
     .then((response) => {
       // console.log(response[0])
-      res.send(response)
-      // res.redirect('/read')
-    })
-    .catch((response) => {
       console.log(response)
+    if (response[1].rowCount === 0) {
+      res.send('cannot delete as ID specified does not exist')
+    }
+    else {
+      res.send('successfully deleted')
+      // res.redirect('/read')
+    }
+    })
+    .catch((err) => {
+      console.log("error section")
+      console.log(err)
+      res.send('weird ID')
     })
 })
 
@@ -103,7 +111,7 @@ app.put('/update/:id', function (req, res) {
   // console.log(status)
   operations.update(idOfDB, description, status)
     .then((response) => {
-      res.send(response[0])
+      res.send("succesfully updated at the given ID")
       // console.log("correct")
       // console.log(response)
       // res.redirect('/read')
@@ -111,6 +119,7 @@ app.put('/update/:id', function (req, res) {
     .catch((response) => {
       // console.log("!!!!!!!!!!error!!!!!!!!!!!!!>>>>>>>>>>>>>>>>>")
       console.log(response)
+      res.send("no ID passed")
     })
 })
 

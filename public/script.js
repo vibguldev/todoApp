@@ -104,7 +104,8 @@ function edit (element) {
     data = {description: updateToDoText}
     descriptionFlag = true
   }
-  updateFetch(data, todoId).then((response) => {
+  updateFetch(data, todoId)
+  .then((response) => {
     let index = todos.findIndex(x => x.id === todoId)
     if (descriptionFlag) {
       todos[index].description = updateToDoText
@@ -199,7 +200,8 @@ function read() {
     filterModeFlag = 0
     response.json()
       .then((json) => {
-
+        console.log(json)
+        console.log(json instanceof Array)
         var row = ""
         let count = 0
         json.forEach((obj) => {
