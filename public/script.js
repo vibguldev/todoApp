@@ -65,7 +65,7 @@ function checkAll () {
 // <label class="${checked ? 'striked' : ''}">"${obj.description} "</label>
 document.getElementById('enterToDo').onkeydown = function (event) {
   if (event.keyCode === 13) {
-    var todo = document.getElementById('enterToDo').value
+    var todo = escapeHtml(document.getElementById('enterToDo').value)
     writeFetch(todo).then((response) => {
       response.json()
         .then((json) => {
@@ -100,7 +100,7 @@ function edit (element) {
     statusFlag = true
   } else {
     var todoId = element.id.slice(4)
-    var updateToDoText = document.getElementById(`text${todoId}`).value
+    var updateToDoText = escapeHtml(document.getElementById(`text${todoId}`).value)
     data = {description: updateToDoText}
     descriptionFlag = true
   }
@@ -131,6 +131,10 @@ function filterTodos (filterMode) {
       todos.forEach((todo) => {
         document.getElementById("this").innerHTML += htmlStringify(todo)
       })
+      document.getElementById("all").className = "filters selected"
+      document.getElementById("active").className = "filters"
+      document.getElementById("completed").className = "filters"
+            
     }
       break
     case 'active': {
@@ -140,6 +144,9 @@ function filterTodos (filterMode) {
           document.getElementById("this").innerHTML += htmlStringify(todo)
         }
       })
+      document.getElementById("active").className = "filters selected"
+      document.getElementById("all").className = "filters"
+      document.getElementById("completed").className = "filters" 
     }
       break
     case 'completed': {
@@ -149,6 +156,9 @@ function filterTodos (filterMode) {
           document.getElementById("this").innerHTML += htmlStringify(todo)
         }
       })
+      document.getElementById("completed").className = "filters selected"
+      document.getElementById("active").className = "filters"
+      document.getElementById("all").className = "filters"      
     }
       break
     default:

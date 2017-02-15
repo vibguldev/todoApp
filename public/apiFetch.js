@@ -1,3 +1,21 @@
+let entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '\/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;',
+  '\\': '&#92;'
+}
+function escapeHtml(string) {
+  console.log("heeeelooooooooooooooooooo")
+  return String(string).replace(/[&<>"'`=\/\\]/g, function (s) {
+    return entityMap[s]
+  })
+}
+
 function readFetch () {
   return fetch('/read', {
     method: 'get'

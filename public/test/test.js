@@ -66,7 +66,7 @@ describe('when the delete API is called', function () {
       })
   })
   it('should return success message for correct ID', function (done) {
-     destroyFetch(523)
+     destroyFetch(533)
       .then((response) => {
         return response.text()
       })
@@ -109,7 +109,7 @@ describe('when the write API is called', function () {
 describe('when the update API is called', function () {
   it('should return success when correct description and status with id are passed', function (done) {
     const data ={status: true, description: "hellooooo"}
-    updateFetch(data, 524)
+    updateFetch(data, 535)
       .then((response) => {
         return response.text()
       })
@@ -124,7 +124,7 @@ describe('when the update API is called', function () {
   })
   it('should return success when only correct description with IS is passed', function (done) {
     const data ={description: "hellooooo i am here"}
-    updateFetch(data, 524)
+    updateFetch(data, 535)
       .then((response) => {
         return response.text()
       })
@@ -139,7 +139,7 @@ describe('when the update API is called', function () {
   })
   it('should return success when only correct status with ID is passed', function (done) {
     const data ={status: false}
-    updateFetch(data, 524)
+    updateFetch(data, 535)
       .then((response) => {
         return response.text()
       })
@@ -154,7 +154,7 @@ describe('when the update API is called', function () {
   })
   it('should return false when nothing is passed for the given ID', function () {
     const data = {}
-    expect(updateFetch(data, 524)).to.equals("neither description nor status was passed")
+    expect(updateFetch(data, 535)).to.equals("neither description nor status was passed")
     
   })
   it('should return false message when no ID is passed', function (done) {
@@ -184,7 +184,7 @@ describe('when the check/uncheck API is called', function () {
       })
       .then((result) => {
         // console.log(result)
-        expect(result[1].rowCount).to.equals(3)
+        expect(result[1].rowCount).to.equals(5)
         done()
       })
       .catch((err) => {
@@ -200,7 +200,7 @@ describe('when the check/uncheck API is called', function () {
       })
       .then((result) => {
         // console.log(result)
-        expect(result[1].rowCount).to.equals(3)
+        expect(result[1].rowCount).to.equals(5)
         done()
       })
       .catch((err) => {
@@ -219,7 +219,7 @@ describe('when the destroy all checked API is called', function () {
       })
       .then((result) => {
         // console.log(result)
-        expect(result[1].rowCount).to.equals(3)
+        expect(result[1].rowCount).to.equals(5)
         done()
       })
       .catch((err) => {

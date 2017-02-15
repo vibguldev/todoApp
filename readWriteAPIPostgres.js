@@ -37,7 +37,7 @@ app.post('/write/:description', function (req, res) {
   operations.insert(description)
     .then((response) => {
       // console.log(response)
-      console.log(response)
+      // console.log(response)
       res.send(response[0])
       // res.redirect('/read')
     })
@@ -63,7 +63,7 @@ app.delete('/destroy/:id', function (req, res) {
   operations.destroy(idOfDB)
     .then((response) => {
       // console.log(response[0])
-      console.log(response)
+      // console.log(response)
     if (response[1].rowCount === 0) {
       res.send('cannot delete as ID specified does not exist')
     }
@@ -73,8 +73,8 @@ app.delete('/destroy/:id', function (req, res) {
     }
     })
     .catch((err) => {
-      console.log("error section")
-      console.log(err)
+      // console.log("error section")
+      // console.log(err)
       res.send('weird ID')
     })
 })

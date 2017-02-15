@@ -229,7 +229,12 @@ a:hover {
   border-width: 1px;
 }
 
-a.selected-filters{
+/*.selected-filters{
+  border: solid rgb(239, 213, 213);
+  border-width: 1px;
+}*/
+
+.filters.selected {
   border: solid rgb(239, 213, 213);
   border-width: 1px;
 }

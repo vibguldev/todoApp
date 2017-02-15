@@ -80,9 +80,11 @@ ALTER TABLE ONLY tasks ALTER COLUMN id SET DEFAULT nextval('tasks_id_seq'::regcl
 --
 
 COPY tasks (description, status, id) FROM stdin;
-you	t	523
-hello	t	525
-hello	t	524
+hi	f	541
+run	f	533
+shopping	f	535
+hello	t	532
+fun	t	534
 \.
 
 
@@ -90,7 +92,7 @@ hello	t	524
 -- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vibhugulati
 --
 
-SELECT pg_catalog.setval('tasks_id_seq', 526, true);
+SELECT pg_catalog.setval('tasks_id_seq', 541, true);
 
 
 --
