@@ -82,7 +82,8 @@ app.delete('/destroy/:id', function (req, res) {
 app.put('/unCheckAll', function (req, res) {
   operations.unCheckAll()
   .then((response) => {
-    res.send("updated all to false succesfully")
+    // console.log(response)
+    res.send(response)
   })
   .catch((response) => {
     res.sendStatus(500)
@@ -92,7 +93,8 @@ app.put('/unCheckAll', function (req, res) {
 app.put('/checkAll', function (req, res) {
   operations.checkAll()
   .then((response) => {
-    res.send("updated all to true succesfully")
+    // console.log(response)    
+    res.send(response)
   })
   .catch((response) => {
     res.sendStatus(500)

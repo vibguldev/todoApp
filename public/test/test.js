@@ -174,3 +174,57 @@ describe('when the update API is called', function () {
       })
   })
 })
+
+describe('when the check/uncheck API is called', function () {
+  it('should return success when correctly unchecks all', function (done) {
+    toggleAllFetch(`/unCheckAll`)
+      .then((response) => {
+        // console.log(response)
+        return response.json()
+      })
+      .then((result) => {
+        // console.log(result)
+        expect(result[1].rowCount).to.equals(3)
+        done()
+      })
+      .catch((err) => {
+        console.log('here')
+        done(err)
+      })
+  })
+  it('should return success when correctly checks all', function (done) {
+    toggleAllFetch(`/checkAll`)
+      .then((response) => {
+        // console.log(response)
+        return response.json()
+      })
+      .then((result) => {
+        // console.log(result)
+        expect(result[1].rowCount).to.equals(3)
+        done()
+      })
+      .catch((err) => {
+        console.log('here')
+        done(err)
+      })
+  })
+})
+
+describe('when the destroy all checked API is called', function () {
+  it('should return success when correctly deletes all checked', function (done) {
+    destroyAllFetch()
+      .then((response) => {
+        // console.log(response)
+        return response.json()
+      })
+      .then((result) => {
+        // console.log(result)
+        expect(result[1].rowCount).to.equals(3)
+        done()
+      })
+      .catch((err) => {
+        console.log('here')
+        done(err)
+      })
+  })
+})
